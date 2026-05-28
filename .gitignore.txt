@@ -1,0 +1,18 @@
+# Designer runtime
+logs
+certs
+.log
+.metadata
+.settings
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temp files
+.tmp
+~
+
+# Local secrets
+.env
+secrets

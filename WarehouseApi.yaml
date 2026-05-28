@@ -1,0 +1,258 @@
+openapi: 3.0.0
+info:
+  title: WarehouseApi
+  version: 1.0.0
+  description: Warehouse inventory management API
+paths:
+  /items:
+    get:
+      summary: List all items in the warehouse inventory
+      responses:
+        '200':
+          description: A list of items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/itemDetails'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Add a new item to the warehouse inventory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/itemDetails'
+      responses:
+        '201':
+          description: Item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/itemDetails'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /items/{itemId}:
+    get:
+      summary: Get item details
+      parameters:
+        - in: path
+          name: itemId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Item details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/itemDetails'
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      summary: Delete an item from the warehouse inventory
+      parameters:
+        - in: path
+          name: itemId
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Item deleted successfully
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Update item details
+      parameters:
+        - in: path
+          name: itemId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/itemDetails'
+      responses:
+        '200':
+          description: Item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/itemDetails'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    patch:
+      summary: Partially update item details
+      parameters:
+        - in: path
+          name: itemId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/itemPatch'
+      responses:
+        '200':
+          description: Item updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/itemPatch'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    itemDetails:
+      type: object
+      properties:
+        itemId:
+          type: string
+          description: Unique identifier for the item
+          example: "12345"
+        description:
+          type: string
+          description: Item description
+          example: "Laptop"
+        height:
+          type: number
+          format: float
+          description: Item height in centimeters
+          example: 12.5
+        weight:
+          type: number
+          format: float
+          description: Item weight in kilograms
+          example: 3.4
+        price:
+          type: number
+          format: float
+          description: Item price
+          example: 999.99
+        supplier:
+          type: string
+          description: Supplier of the item
+          example: "TechCorp"
+        inStock:
+          type: integer
+          description: Quantity of the item in stock
+          example: 50
+    itemPatch:
+      type: object
+      description: Fields to update on an item. Send only the fields you want to change.
+      properties:
+        description:
+          type: string
+          description: Item description
+          example: "Gaming Laptop"
+        height:
+          type: number
+          format: float
+          description: Item height in centimeters
+          example: 13.0
+        weight:
+          type: number
+          format: float
+          description: Item weight in kilograms
+          example: 3.6
+        price:
+          type: number
+          format: float
+          description: Item price
+          example: 899.99
+        supplier:
+          type: string
+          description: Supplier of the item
+          example: "TechCorp"
+        inStock:
+          type: integer
+          description: Quantity of the item in stock
+          example: 30
+    ErrorResponse:
+      type: object
+      properties:
+        errorCode:
+          type: string
+          description: Error code representing the type of error
+          example: "ITEM_NOT_FOUND"
+        message:
+          type: string
+          description: Detailed error message
+          example: "Item not found"
