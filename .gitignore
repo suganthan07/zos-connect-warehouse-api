@@ -1,3 +1,13 @@
+# Gradle build outputs and cache (NEVER commit these)
+.gradle/
+build/
+!gradle-wrapper.jar
+.gradletasknamecache
+
+# OpenAPI generator artifacts
+.openapi-generator/
+.openapi-generator-ignore
+
 # Designer runtime
 logs/
 certs/
@@ -5,9 +15,19 @@ certs/
 .metadata/
 .settings/
 
+# Compiled archives
+*.war
+*.jar
+*.class
+
 # OS files
 .DS_Store
 Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.iml
 
 # Temp files
 *.tmp

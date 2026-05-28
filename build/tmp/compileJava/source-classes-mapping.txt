@@ -1,4 +1,0 @@
-com/ibm/zosconnect/api/ItemsApi.java
- com.ibm.zosconnect.api.ItemsApi
-com/ibm/zosconnect/api/RestApplication.java
- com.ibm.zosconnect.api.RestApplication
